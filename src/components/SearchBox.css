@@ -1,0 +1,11 @@
+.padding {
+	padding: 0.5rem;
+}
+
+.input-padding {
+	padding: 1rem;
+	background-color: #cdecff;
+	border-color: #19a974;
+	border-style: solid;
+	border-width: 1px;
+}

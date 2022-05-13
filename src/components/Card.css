@@ -1,0 +1,14 @@
+.div-card {
+	background-color: #9eebcf;
+	display: inline-block;
+	padding: 1rem;
+	margin: 0.5rem;
+	box-shadow: 4px 4px 8px 0 rgb(0 0 0 / 20%);
+	border-width: 0.25rem;
+	border-radius: 0.5rem;
+	transition: transform 0.25s ease-out; /* Animation */
+}
+
+.div-card:hover {
+	transform: scale(1.05);
+}

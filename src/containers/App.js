@@ -31,8 +31,8 @@ class App extends React.Component {
 			r.name.toLocaleLowerCase().includes(searchfield.toLocaleLowerCase())
 		);
 		return robots?.length ? (
-			<div className="tc">
-				<h1 className="f1">RoboFriends</h1>
+			<div>
+				<h1>RoboFriends</h1>
 				<SearchBox
 					searchfield={searchfield}
 					searchChange={this.onSearchChange}
