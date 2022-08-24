@@ -5,29 +5,30 @@ import { robots } from '../robots';
 import './App.css';
 import Scroll from '../components/Scroll';
 import ErrorBoundry from '../components/ErrorBoundry';
+import { connect } from 'react-redux';
+import { fetchRobots, setSearchfield } from '../actions';
 
-const App = () => {
-	const [robots, setRobots] = useState([]);
-	const [searchfield, setSearchfield] = useState('');
-
+const App = ({
+	searchField,
+	onSearchFieldChange,
+	isFetching,
+	fetched,
+	robots,
+	onFetchRobots,
+	error,
+}) => {
 	useEffect(() => {
-		fetch('https://jsonplaceholder.typicode.com/users')
-			.then((response) => response.json())
-			.then((users) => setRobots(users));
+		onFetchRobots();
 	}, []);
 
-	const onSearchChange = (event) => {
-		setSearchfield(event.target.value);
-	};
-
 	const filteredRobots = robots?.filter((r) =>
-		r.name.toLocaleLowerCase().includes(searchfield.toLocaleLowerCase())
+		r.name.toLocaleLowerCase().includes(searchField?.toLocaleLowerCase())
 	);
 
-	return robots?.length ? (
+	return !isFetching ? (
 		<div>
 			<h1>RoboFriends</h1>
-			<SearchBox searchfield={searchfield} searchChange={onSearchChange} />
+			<SearchBox searchfield={searchField} searchChange={onSearchFieldChange} />
 			<Scroll>
 				<ErrorBoundry>
 					<CardList robots={filteredRobots} />
@@ -39,4 +40,19 @@ const App = () => {
 	);
 };
 
-export default App;
+const mapStateToProps = (state) => {
+	return {
+		searchField: state.searchRobots.searchField,
+		isFetching: state.fetchRobots.isFetching,
+		fetched: state.fetchRobots.fetched,
+		robots: state.fetchRobots.robots,
+		error: state.fetchRobots.error,
+	};
+};
+
+const mapDispatchToProps = (dispatch) => ({
+	onSearchFieldChange: (e) => dispatch(setSearchfield(e.target.value)),
+	onFetchRobots: () => dispatch(fetchRobots()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
